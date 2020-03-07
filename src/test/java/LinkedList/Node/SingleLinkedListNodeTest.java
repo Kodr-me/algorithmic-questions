@@ -55,27 +55,11 @@ public class SingleLinkedListNodeTest {
         n.appendToTail(5);
         n.appendToTail(6);
         n.appendToTail(2);
-        removeDupplicates(n);
+        removeDuplicates(n);
 
         int length = n.length();
 
         assertTrue(length == 7);
-    }
-
-    @Test
-    void kthLastTest1() {
-        SingleLinkedListNode head = generateLongerList();
-        printRecursively(head);
-
-        SingleLinkedListNode n = kThLastRough(head, 3);
-        assertEquals(6, n.data);
-    }
-
-    @Test
-    void kthLastTest2() {
-        SingleLinkedListNode head = generateList();
-        SingleLinkedListNode n = kThLastRough(head, 2);
-        assertEquals(3, n.data);
     }
 
     @Test
@@ -126,6 +110,52 @@ public class SingleLinkedListNodeTest {
         boolean result = deleteMiddleNode(n);
         assertTrue(result);
         assertEquals(5, head.length());
+    }
+
+//    @Test
+//    void partitionTest1() {
+//        SingleLinkedListNode head = new SingleLinkedListNode(3);
+//        head.appendToTail(5);
+//        head.appendToTail(8);
+//        head.appendToTail(5);
+//        head.appendToTail(10);
+//        head.appendToTail(2);
+//        head.appendToTail(1);
+//        System.out.println(head.toString());
+//        partition(head, 5);
+//        System.out.println(head.toString());
+//    }
+
+    @Test
+    void sumListTest1() {
+        SingleLinkedListNode list1 = new SingleLinkedListNode(7);
+        list1.appendToTail(1);
+        list1.appendToTail(6);
+
+        SingleLinkedListNode list2 = new SingleLinkedListNode(5);
+        list2.appendToTail(9);
+        list2.appendToTail(2);
+
+        SingleLinkedListNode result = sumList(list1, list2);
+        assertEquals(2, result.data);
+        assertEquals(1, result.next.data);
+        assertEquals(9, result.next.next.data);
+    }
+
+    @Test
+    void sumListFollowUpTest1() {
+        SingleLinkedListNode list1 = new SingleLinkedListNode(6);
+        list1.appendToTail(1);
+        list1.appendToTail(7);
+
+        SingleLinkedListNode list2 = new SingleLinkedListNode(2);
+        list2.appendToTail(9);
+        list2.appendToTail(5);
+
+        SingleLinkedListNode result = sumListFollowUp(list1, list2);
+        assertEquals(9, result.data);
+        assertEquals(1, result.next.data);
+        assertEquals(2, result.next.next.data);
     }
 
     SingleLinkedListNode generateList() {

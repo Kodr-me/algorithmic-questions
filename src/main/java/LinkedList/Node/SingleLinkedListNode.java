@@ -58,7 +58,7 @@ public class SingleLinkedListNode {
         return head;
     }
 
-    public static void removeDupplicates(SingleLinkedListNode head) {
+    public static void removeDuplicates(SingleLinkedListNode head) {
         SingleLinkedListNode n = head;
         HashSet<Integer> a = new HashSet<>();
 
@@ -78,40 +78,6 @@ public class SingleLinkedListNode {
         }
     }
 
-    /*
-    Problem: Return Kth to Last: Implement an algorithm to find the kth to last element of a singly linked list.
-    Hints:
-    - What if you knew the linked list size? What is the difference between finding the Kth-to- last element and finding the Xth element?
-    - If you don't know the linked list size, can you compute it? How does this impact the runtime?
-    - Try implementing it recursively. If you could find the (K - l )th to last element, can you find the Kth element?
-    - You might find it useful to return multiple values. Some languages don't directly support this, but there are workarounds in essentially any language. What are some of those workarounds?
-    - Can you do it iteratively? Imagine if you had two pointers pointing to adjacent nodes and they were moving at the same speed through the linked list. When one hits the end of the linked list, where will the other be?
-     */
-
-    public static SingleLinkedListNode kThLastRough(SingleLinkedListNode head, int n) {
-        SingleLinkedListNode quickRunner = head;
-        SingleLinkedListNode slowRunner = head;
-        int length = 0;
-        int c = 0;
-
-        while (quickRunner.next.next != null) {
-            quickRunner = quickRunner.next.next;
-            slowRunner = slowRunner.next;
-            length++;
-            length++;
-            c++;
-        }
-        length++;
-
-        while (length - c > n) {
-            slowRunner = slowRunner.next;
-            c++;
-        }
-
-
-        return slowRunner;
-    }
-
     public static SingleLinkedListNode kThLastIteratively(SingleLinkedListNode head, int k) {
         SingleLinkedListNode p1 = head;
         SingleLinkedListNode p2 = head;
@@ -129,13 +95,10 @@ public class SingleLinkedListNode {
     }
 
     public static int kthLastRecursively(SingleLinkedListNode head, int k) {
-        if (head == null) {
-            return 0;
-        }
+        if (head == null) return 0;
         int index = kthLastRecursively(head.next, k) + 1;
-        if (index == k) {
-            System.out.println(k + "th to last node is " + head.data);
-        }
+
+        if (index == k) System.out.println(k + "th to last node is " + head.data);
         return head.data;
     }
 
@@ -161,10 +124,6 @@ public class SingleLinkedListNode {
         return null;
     }
 
-    /*
-        In case of having a normal linked list, we need to perform a check to verify if is the last node
-        Then we can just give the node provided the same information as the next node - making it seem like a replacement.
-     */
     public static boolean deleteMiddleNode(SingleLinkedListNode singleLinkedListNode) {
         if (singleLinkedListNode == null || singleLinkedListNode.next == null) return false;
         SingleLinkedListNode next = singleLinkedListNode.next;
@@ -173,9 +132,106 @@ public class SingleLinkedListNode {
         return true;
     }
 
-    /*
-    Intersection: Given two (singly) linked lists, determine if the two lists intersect. Return the inter- secting node.
-    Note that the intersection is defined based on reference, not value. That is, if the kth node of the first linked
-    list is the exact same node (by reference) as the jth node of the second linked list, then they are intersecting.
-     */
+//    // try to finish this problem
+//    public static void partition(SingleLinkedListNode head, int partition) {
+//        SingleLinkedListNode temp = head;
+//        SingleLinkedListNode left = null;
+//        SingleLinkedListNode lastBeforeLeft = null;
+//        SingleLinkedListNode right = null;
+//        SingleLinkedListNode lastBeforeRight = null;
+//
+//        while (temp != null) {
+//            if (temp.data >= partition) {
+//                System.out.println("Right: value " + temp.data);
+//                if (right == null) {
+//                    right = temp;
+//
+////                    right = temp;
+//                } else {
+//                    getLastNode(right).next = new SingleLinkedListNode(temp.data);
+//                }
+//            }
+//            if (temp.data < partition) {
+//                System.out.println("left: value " + temp.data);
+//                if (left == null) {
+//                    left = new SingleLinkedListNode(temp.data);
+//                } else {
+//                    getLastNode(left).next = new SingleLinkedListNode(temp.data);
+//                }
+//            }
+//            temp = temp.next;
+//        }
+//
+//        System.out.println("right: " + right.toString());
+//        System.out.println("left: " + left.toString());
+//    }
+
+    public static SingleLinkedListNode sumList(SingleLinkedListNode list1, SingleLinkedListNode list2) {
+        String list1Values = getListNumbersInReverse(list1);
+        String list2Values = getListNumbersInReverse(list2);
+        int sum = Integer.parseInt(list1Values) + Integer.parseInt(list2Values);
+
+        String stringedResult = Integer.toString(sum);
+
+        char c = stringedResult.charAt(stringedResult.length() - 1);
+        int data = c - '0';
+
+        SingleLinkedListNode result = new SingleLinkedListNode(data);
+
+        for (int i = stringedResult.length() - 2; i >= 0; i--) {
+            c = stringedResult.charAt(i);
+            data = c - '0';
+            result.appendToTail(data);
+        }
+
+        return result;
+    }
+
+    private static String getListNumbersInReverse(SingleLinkedListNode singleLinkedListNode) {
+        StringBuilder listNumbers = new StringBuilder();
+        SingleLinkedListNode n = singleLinkedListNode;
+
+        while (n.next != null) {
+            listNumbers.append(n.data);
+            n = n.next;
+        }
+        listNumbers.append(n.data);
+        listNumbers.reverse();
+        return listNumbers.toString();
+    }
+
+    public static SingleLinkedListNode sumListFollowUp(SingleLinkedListNode list1, SingleLinkedListNode list2) {
+        String list1Values = getListNumbers(list1);
+        String list2Values = getListNumbers(list2);
+        int sum = Integer.parseInt(list1Values) + Integer.parseInt(list2Values);
+
+        String stringedResult = Integer.toString(sum);
+        System.out.println(stringedResult);
+
+        char c = stringedResult.charAt(0);
+        int data = c - '0';
+
+        SingleLinkedListNode result = new SingleLinkedListNode(data);
+
+        for (int i = 1; i < stringedResult.length(); i++) {
+            c = stringedResult.charAt(i);
+            data = c - '0';
+            result.appendToTail(data);
+        }
+
+        return result;
+    }
+
+    private static String getListNumbers(SingleLinkedListNode singleLinkedListNode) {
+        StringBuilder listNumbers = new StringBuilder();
+        SingleLinkedListNode n = singleLinkedListNode;
+
+        while (n.next != null) {
+            listNumbers.append(n.data);
+            n = n.next;
+        }
+        listNumbers.append(n.data);
+        return listNumbers.toString();
+    }
+
 }
