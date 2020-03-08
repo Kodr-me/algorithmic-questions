@@ -112,19 +112,20 @@ public class SingleLinkedListNodeTest {
         assertEquals(5, head.length());
     }
 
-//    @Test
-//    void partitionTest1() {
-//        SingleLinkedListNode head = new SingleLinkedListNode(3);
-//        head.appendToTail(5);
-//        head.appendToTail(8);
-//        head.appendToTail(5);
-//        head.appendToTail(10);
-//        head.appendToTail(2);
-//        head.appendToTail(1);
-//        System.out.println(head.toString());
-//        partition(head, 5);
-//        System.out.println(head.toString());
-//    }
+    @Test
+    void partitionTest1() {
+        SingleLinkedListNode head = new SingleLinkedListNode(3);
+        head.appendToTail(5);
+        head.appendToTail(8);
+        head.appendToTail(5);
+        head.appendToTail(10);
+        head.appendToTail(2);
+        head.appendToTail(1);
+        SingleLinkedListNode partitioned = head.partition(5);
+        assertEquals(partitioned.data, 1);
+        assertEquals(partitioned.next.data, 2);
+        assertEquals(partitioned.next.next.data, 3);
+    }
 
     @Test
     void sumListTest1() {
@@ -156,6 +157,42 @@ public class SingleLinkedListNodeTest {
         assertEquals(9, result.data);
         assertEquals(1, result.next.data);
         assertEquals(2, result.next.next.data);
+    }
+
+    @Test
+    void palindromeTest1() {
+        SingleLinkedListNode head = new SingleLinkedListNode(1);
+        head.appendToTail(2);
+        head.appendToTail(3);
+        head.appendToTail(3);
+        head.appendToTail(2);
+        head.appendToTail(1);
+
+        assertTrue(linkedListPalindromeReverseAndCompare(head));
+    }
+
+    @Test
+    void intersectionTest1() {
+        SingleLinkedListNode head = generateList();
+        SingleLinkedListNode intersected = getNode(head, 3);
+        SingleLinkedListNode list2 = new SingleLinkedListNode(10);
+        list2.appendToTail(11);
+        list2.appendToTail(12);
+        getNode(list2, 12).next = intersected;
+
+        assertTrue(linkedListIntersection(head, list2));
+    }
+
+    @Test
+    void palindromeTest2() {
+        SingleLinkedListNode head = new SingleLinkedListNode(1);
+        head.appendToTail(2);
+        head.appendToTail(3);
+        head.appendToTail(3);
+        head.appendToTail(2);
+        head.appendToTail(2);
+
+        assertFalse(linkedListPalindromeReverseAndCompare(head));
     }
 
     SingleLinkedListNode generateList() {

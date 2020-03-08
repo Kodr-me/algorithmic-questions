@@ -1,6 +1,7 @@
 package LinkedList.Node;
 
 import java.util.HashSet;
+import java.util.Stack;
 
 public class SingleLinkedListNode {
     SingleLinkedListNode next = null;
@@ -234,4 +235,123 @@ public class SingleLinkedListNode {
         return listNumbers.toString();
     }
 
+    // As we know a palindrome is just the same frontwards and backwards, one easy to implement approach would be to reverse the list values and compare them. This is a nice implementation as we can break down each step onto a separate function. The runtime would be of O(N).
+    public static boolean linkedListPalindromeReverseAndCompare(SingleLinkedListNode node) {
+           SingleLinkedListNode reversed = reverseList(node);
+            return compareLists(node, reversed);
+    }
+
+    private static boolean compareLists(SingleLinkedListNode n1, SingleLinkedListNode n2) {
+        while (n1 != null) {
+            if (n1.data != n2.data) return false;
+            n1 = n1.next;
+            n2 = n2.next;
+        }
+        return true;
+    }
+
+    private static SingleLinkedListNode reverseList(SingleLinkedListNode node) {
+        SingleLinkedListNode prev = new SingleLinkedListNode(node.data);
+        SingleLinkedListNode holder = null;
+        while (node.next != null) {
+            node = node.next;
+            holder = new SingleLinkedListNode(node.data);
+            holder.next = prev;
+            prev = holder;
+
+        }
+        return holder;
+    }
+
+    public static boolean isLinkedListPalindromeIteratively(SingleLinkedListNode head) {
+        Stack<Integer> stack = new Stack<>();
+        SingleLinkedListNode slow = head;
+        SingleLinkedListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            stack.push(slow.data);
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        if (fast.next != null) {
+            slow = slow.next;
+        }
+
+        while (slow.next != null) {
+            int top = stack.pop().intValue();
+            if (top != slow.data) return false;
+            slow = slow.next;
+        }
+        return true;
+    }
+
+    // This is a pretty straight forward solution, where I have two lists on which I will keep adding the nodes to each depending if the values are smaller or bigger than the pivot. Keeping track of the node which is at the start of each list - as I will have to append them in the end. Once I've got both lists I just have to iterate over the first list until I get the end and make that node.next the right list.
+    public SingleLinkedListNode partition(int pivot) {
+        SingleLinkedListNode left = null;
+        SingleLinkedListNode right = null;
+        SingleLinkedListNode node = this;
+        SingleLinkedListNode n = null;
+
+        while (node.next != null) {
+            n = new SingleLinkedListNode(node.data);
+            if (n.data >= pivot) {
+                right = appendToStart(right, n);
+            } else {
+                left = appendToStart(left, n);
+            }
+            node = node.next;
+        }
+        // need to also append the last node
+        n = new SingleLinkedListNode(node.data);
+        if (node.data >= pivot) {
+            right = appendToStart(right, n);
+        } else {
+            left = appendToStart(left, n);
+        }
+
+        // need to iterate through the left list in order to append the right one to the last element
+        node = left;
+        while (node.next != null) {
+            node = node.next;
+        }
+        node.next = right;
+        return left;
+    }
+
+    private SingleLinkedListNode appendToStart(SingleLinkedListNode list, SingleLinkedListNode newNode) {
+        if (list == null) list = newNode;
+        else {
+            newNode.next = list;
+            list = newNode;
+        }
+        return list;
+    }
+
+    public static SingleLinkedListNode partitionSimple(SingleLinkedListNode node, int x) {
+        SingleLinkedListNode head = node;
+        SingleLinkedListNode tail = node;
+        while (node.next != null) {
+            SingleLinkedListNode next = node.next;
+            // insert node at head
+            if (node.data < x) {
+                node.next = head;
+                head = node;
+            // insert node at tail
+            } else {
+                tail.next = node;
+                tail = node;
+            }
+            node = node.next;
+        }
+        tail.next = null;
+
+        return head;
+    }
+
+    public static boolean linkedListIntersection(SingleLinkedListNode list1, SingleLinkedListNode list2) {
+        System.out.println(list1);
+        System.out.println(list2);
+        return false;
+    }
 }
