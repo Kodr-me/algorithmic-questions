@@ -1,6 +1,8 @@
 package LinkedList.Node;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Stack;
 
 public class SingleLinkedListNode {
@@ -133,40 +135,6 @@ public class SingleLinkedListNode {
         return true;
     }
 
-//    // try to finish this problem
-//    public static void partition(SingleLinkedListNode head, int partition) {
-//        SingleLinkedListNode temp = head;
-//        SingleLinkedListNode left = null;
-//        SingleLinkedListNode lastBeforeLeft = null;
-//        SingleLinkedListNode right = null;
-//        SingleLinkedListNode lastBeforeRight = null;
-//
-//        while (temp != null) {
-//            if (temp.data >= partition) {
-//                System.out.println("Right: value " + temp.data);
-//                if (right == null) {
-//                    right = temp;
-//
-////                    right = temp;
-//                } else {
-//                    getLastNode(right).next = new SingleLinkedListNode(temp.data);
-//                }
-//            }
-//            if (temp.data < partition) {
-//                System.out.println("left: value " + temp.data);
-//                if (left == null) {
-//                    left = new SingleLinkedListNode(temp.data);
-//                } else {
-//                    getLastNode(left).next = new SingleLinkedListNode(temp.data);
-//                }
-//            }
-//            temp = temp.next;
-//        }
-//
-//        System.out.println("right: " + right.toString());
-//        System.out.println("left: " + left.toString());
-//    }
-
     public static SingleLinkedListNode sumList(SingleLinkedListNode list1, SingleLinkedListNode list2) {
         String list1Values = getListNumbersInReverse(list1);
         String list2Values = getListNumbersInReverse(list2);
@@ -235,7 +203,6 @@ public class SingleLinkedListNode {
         return listNumbers.toString();
     }
 
-    // As we know a palindrome is just the same frontwards and backwards, one easy to implement approach would be to reverse the list values and compare them. This is a nice implementation as we can break down each step onto a separate function. The runtime would be of O(N).
     public static boolean linkedListPalindromeReverseAndCompare(SingleLinkedListNode node) {
            SingleLinkedListNode reversed = reverseList(node);
             return compareLists(node, reversed);
@@ -286,7 +253,6 @@ public class SingleLinkedListNode {
         return true;
     }
 
-    // This is a pretty straight forward solution, where I have two lists on which I will keep adding the nodes to each depending if the values are smaller or bigger than the pivot. Keeping track of the node which is at the start of each list - as I will have to append them in the end. Once I've got both lists I just have to iterate over the first list until I get the end and make that node.next the right list.
     public SingleLinkedListNode partition(int pivot) {
         SingleLinkedListNode left = null;
         SingleLinkedListNode right = null;
@@ -302,7 +268,6 @@ public class SingleLinkedListNode {
             }
             node = node.next;
         }
-        // need to also append the last node
         n = new SingleLinkedListNode(node.data);
         if (node.data >= pivot) {
             right = appendToStart(right, n);
@@ -310,7 +275,6 @@ public class SingleLinkedListNode {
             left = appendToStart(left, n);
         }
 
-        // need to iterate through the left list in order to append the right one to the last element
         node = left;
         while (node.next != null) {
             node = node.next;
@@ -349,9 +313,88 @@ public class SingleLinkedListNode {
         return head;
     }
 
-    public static boolean linkedListIntersection(SingleLinkedListNode list1, SingleLinkedListNode list2) {
-        System.out.println(list1);
-        System.out.println(list2);
-        return false;
+
+    public static SingleLinkedListNode linkedListIntersectionHashMap(SingleLinkedListNode node1, SingleLinkedListNode node2) {
+        HashSet<Integer> hash = new HashSet<>();
+
+        while (node1.next != null) {
+            hash.add(node1.hashCode());
+            node1 = node1.next;
+        }
+
+        while (node2.next != null) {
+            if (hash.contains(node2.hashCode())) return node2;
+            node2 = node2.next;
+        }
+
+        return null;
+    }
+
+    private static SingleLinkedListNode getLastNode(SingleLinkedListNode head) {
+        if (head.next == null) {
+            return head;
+        }
+        return getLastNode(head.next);
+    }
+
+    public static SingleLinkedListNode linkedListIntersectionTailCheck(SingleLinkedListNode node1, SingleLinkedListNode node2) {
+
+        SingleLinkedListNode lastNode1 = getLastNode(node1);
+        SingleLinkedListNode lastNode2 = getLastNode(node2);
+        if (lastNode1.hashCode() != lastNode2.hashCode()) return null;
+
+        int n1Length = node1.length();
+        int n2Length = node2.length();
+
+        if (n1Length > n2Length) {
+            for (int i = 0; i < n1Length - n2Length; i++) {
+                node1 = node1.next;
+            }
+        } else {
+            for (int i = 0; i < n2Length -  n1Length; i++) {
+                node2 = node2.next;
+            }
+        }
+
+        while (node1.next != null && node2.next != null) {
+            if (node1.hashCode() == node2.hashCode()) return node1;
+            node1 = node1.next;
+            node2 = node2.next;
+        }
+        return  null;
+    }
+
+    public static SingleLinkedListNode loopDetectionHashMap(SingleLinkedListNode head) {
+        HashSet<Integer> map = new HashSet<>();
+
+        while (head.next != null) {
+            if (map.contains(head.hashCode())) break;
+            map.add(head.hashCode());
+            head = head.next;
+        }
+        return head.next != null ? head : null;
+    }
+
+    public static SingleLinkedListNode loopDetection(SingleLinkedListNode head) {
+        SingleLinkedListNode fast = head.next.next;
+        SingleLinkedListNode slow = head.next;
+
+        while (fast.next!= null && fast.next.next != null) {
+            if (fast.hashCode() == slow.hashCode()) {
+                return slow;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return null;
+    }
+
+    public void appendNodeToTail(SingleLinkedListNode node) {
+        SingleLinkedListNode n = this;
+        while (n.next != null) {
+            n = n.next;
+        }
+        n.next = node;
     }
 }

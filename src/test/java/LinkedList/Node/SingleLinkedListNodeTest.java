@@ -180,7 +180,43 @@ public class SingleLinkedListNodeTest {
         list2.appendToTail(12);
         getNode(list2, 12).next = intersected;
 
-        assertTrue(linkedListIntersection(head, list2));
+        assertEquals(3, linkedListIntersectionHashMap(head, list2).data);
+    }
+
+    @Test
+    void intersectionTest2() {
+        SingleLinkedListNode head = generateList();
+        SingleLinkedListNode intersected = getNode(head, 3);
+        SingleLinkedListNode list2 = new SingleLinkedListNode(10);
+        list2.appendToTail(11);
+        list2.appendToTail(12);
+        getNode(list2, 12).next = intersected;
+
+        assertEquals(3, linkedListIntersectionTailCheck(head, list2).data);
+    }
+
+    @Test
+    void intersectionTest3() {
+        SingleLinkedListNode head = generateList();
+        SingleLinkedListNode intersected = getNode(head, 3);
+        SingleLinkedListNode list2 = new SingleLinkedListNode(10);
+        list2.appendToTail(11);
+        list2.appendToTail(12);
+        list2.appendToTail(14);
+        list2.appendToTail(15);
+        list2.appendToTail(16);
+        getNode(list2, 12).next = intersected;
+
+        assertEquals(3, linkedListIntersectionTailCheck(head, list2).data);
+    }
+
+    @Test
+    void intersectionTest4() {
+        SingleLinkedListNode head = generateList();
+        SingleLinkedListNode head2 = generateLongerList();
+
+        assertNull(linkedListIntersectionTailCheck(head, head2));
+
     }
 
     @Test
@@ -193,6 +229,23 @@ public class SingleLinkedListNodeTest {
         head.appendToTail(2);
 
         assertFalse(linkedListPalindromeReverseAndCompare(head));
+    }
+
+    @Test
+    void loopDetectionTest1() {
+        SingleLinkedListNode head = generateList();
+        SingleLinkedListNode n = getNode(head, 3);
+        int hashCode = n.hashCode();
+        head.appendNodeToTail(n);
+        assertEquals(hashCode, loopDetectionHashMap(head).hashCode());
+        assertEquals(hashCode, loopDetection(head).hashCode());
+    }
+
+    @Test
+    void loopDetectionTest2() {
+        SingleLinkedListNode head = generateList();
+        assertNull(loopDetectionHashMap(head));
+        assertNull(loopDetection(head));
     }
 
     SingleLinkedListNode generateList() {
