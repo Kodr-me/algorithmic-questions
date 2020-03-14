@@ -9,6 +9,17 @@ public class BinaryTreeNode {
         this.data = d;
     }
 
+    public static void insertNode(BinaryTreeNode node, int d) {
+        if (d > node.data) {
+            if (node.right == null) node.right = new BinaryTreeNode(d);
+            else insertNode(node.right, d);
+        }
+        if (d < node.data) {
+            if (node.left == null) node.left = new BinaryTreeNode(d);
+            else insertNode(node.left, d);
+        }
+    }
+
     public static void inOrderTraversal(BinaryTreeNode node) {
            if (node != null) {
                inOrderTraversal(node.left);
