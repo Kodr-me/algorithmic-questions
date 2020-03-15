@@ -2,8 +2,8 @@ package TreesAndGraphs;
 
 public class BinaryTreeNode {
     int data;
-    BinaryTreeNode left;
-    BinaryTreeNode right;
+    public BinaryTreeNode left;
+    public BinaryTreeNode right;
 
     public BinaryTreeNode(int d) {
         this.data = d;
