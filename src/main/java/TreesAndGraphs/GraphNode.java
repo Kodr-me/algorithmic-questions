@@ -2,19 +2,23 @@ package TreesAndGraphs;
 
 import java.util.ArrayList;
 
-public class GraphNode {
-    int data;
-    private ArrayList<GraphNode> adjacentNodes = new ArrayList<>();
+public class GraphNode<T> {
+    T data;
+    private ArrayList<GraphNode<T>> adjacentNodes = new ArrayList<>();
 
-    public GraphNode(int d) {
-        this.data = d;
+    public GraphNode(T t) {
+        this.data = t;
     }
 
-    public ArrayList<GraphNode> getAdjacentNodes() {
+    public T getData() {
+        return this.data;
+    }
+
+    public ArrayList<GraphNode<T>> getAdjacentNodes() {
         return adjacentNodes;
     }
 
-    public void insertAdjacent(GraphNode adjacentNode) {
+    public void insertAdjacent(GraphNode<T> adjacentNode) {
         this.adjacentNodes.add(adjacentNode);
     }
 }

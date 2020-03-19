@@ -1,9 +1,10 @@
 package TreesAndGraphs;
 
 public class BinaryTreeNode {
-    int data;
+    public int data;
     public BinaryTreeNode left;
     public BinaryTreeNode right;
+    public BinaryTreeNode parent;
 
     public BinaryTreeNode(int d) {
         this.data = d;
@@ -11,12 +12,33 @@ public class BinaryTreeNode {
 
     public static void insertNode(BinaryTreeNode node, int d) {
         if (d > node.data) {
-            if (node.right == null) node.right = new BinaryTreeNode(d);
+            if (node.right == null) {
+                BinaryTreeNode n = new BinaryTreeNode(d);
+                n.parent = node;
+                node.right = n;
+            }
             else insertNode(node.right, d);
         }
         if (d < node.data) {
-            if (node.left == null) node.left = new BinaryTreeNode(d);
+            if (node.left == null) {
+                BinaryTreeNode n = new BinaryTreeNode(d);
+                n.parent = node;
+                node.left = n;
+            }
             else insertNode(node.left, d);
+        }
+    }
+
+    void printInOrderTraversal() {
+        BinaryTreeNode n = this;
+        printInOrderTraversal(n);
+    }
+
+    void printInOrderTraversal(BinaryTreeNode n) {
+        if (n != null) {
+            printInOrderTraversal(n.left);
+            visit(n);
+            printInOrderTraversal(n.right);
         }
     }
 

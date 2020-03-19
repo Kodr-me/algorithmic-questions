@@ -2,7 +2,7 @@ package TreesAndGraphs;
 
 import org.junit.jupiter.api.Test;
 
-import static TreesAndGraphs.BinaryTreeNode.insertNode;
+import static TreesAndGraphs.BSTUtils.generateTree;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -83,20 +83,6 @@ public class ValidateBSTTest {
         n3.left = n6;
         n6.left = n1;
         assertFalse(validateBST.checkBST(head));
-    }
-
-    BinaryTreeNode generateTree() {
-        BinaryTreeNode head = new BinaryTreeNode(5);
-        insertNode(head, 3);
-        insertNode(head, 2);
-        insertNode(head, 4);
-        insertNode(head, 1);
-        insertNode(head, 7);
-        insertNode(head, 6);
-        insertNode(head, 8);
-        insertNode(head, 9);
-
-        return head;
     }
 
     BinaryTreeNode generateBadTree() {

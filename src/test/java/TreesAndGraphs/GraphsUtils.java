@@ -2,7 +2,7 @@ package TreesAndGraphs;
 
 public class GraphsUtils {
     public static Graph generateGraph() {
-        Graph graph = new Graph();
+        Graph<Integer> graph = new Graph();
 
         GraphNode n0 = new GraphNode(0);
         GraphNode n1 = new GraphNode(1);
