@@ -29,6 +29,26 @@ public class BinaryTreeNode {
         }
     }
 
+    public void insertNode(int d) {
+        BinaryTreeNode node = this;
+        if (d > node.data) {
+            if (node.right == null) {
+                BinaryTreeNode n = new BinaryTreeNode(d);
+                n.parent = node;
+                node.right = n;
+            }
+            else insertNode(node.right, d);
+        }
+        if (d < node.data) {
+            if (node.left == null) {
+                BinaryTreeNode n = new BinaryTreeNode(d);
+                n.parent = node;
+                node.left = n;
+            }
+            else insertNode(node.left, d);
+        }
+    }
+
     void printInOrderTraversal() {
         BinaryTreeNode n = this;
         printInOrderTraversal(n);
@@ -68,5 +88,38 @@ public class BinaryTreeNode {
 
     private static void visit(BinaryTreeNode node) {
         System.out.println("visiting node: " + node.data);
+    }
+
+    public BinaryTreeNode find(int data) {
+        BinaryTreeNode n = this;
+        while (n != null) {
+            if (data == n.data) return n;
+            if (data < n.data) n = n.left;
+            if (data > n.data) n = n.right;
+        }
+        return null;
+    }
+
+    public BinaryTreeNode delete(int data) {
+        BinaryTreeNode n = this;
+        BinaryTreeNode prev = this;
+        while (n != null) {
+            if (n.data == data) {
+                prev.left = n.left;
+                prev.right = n.right;
+                n.left.parent = prev;
+                n.right.parent = prev;
+                return prev;
+            }
+            if (data < n.data) {
+                prev = n;
+                n = n.left;
+            };
+            if (data > n.data) {
+                prev = n;
+                n = n.right;
+            };
+        }
+        return null;
     }
 }
