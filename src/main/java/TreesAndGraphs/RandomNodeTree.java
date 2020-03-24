@@ -5,44 +5,42 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomNodeTree {
-    BinaryTreeNode head;
+    private int data;
+    public RandomNodeTree left;
+    public RandomNodeTree right;
+    private int size;
 
-    public RandomNodeTree(BinaryTreeNode head) {
-        this.head = head;
+    public RandomNodeTree(int data) {
+        this.data = data;
+        this.size = 1;
     }
 
-    public void insert(int data) {
-        head.insertNode(data);
+    public RandomNodeTree getRandomNode() {
+        int leftSize = left == null ? 0 : left.size;
+        System.out.println(leftSize);
+        Random random = new Random();
+        int index = random.nextInt(leftSize);
+
+        if (index < leftSize) return left.getRandomNode();
+        else if (index == leftSize) return this;
+        else return right.getRandomNode();
     }
 
-    public BinaryTreeNode search(int data) {
-        return head.find(data);
+    public void insertInOrder(int d) {
+        if (d <= data) {
+            if (left == null) left = new RandomNodeTree(d);
+            else left.insertInOrder(d);
+        } else {
+            if (right == null) right = new RandomNodeTree(d);
+            else right.insertInOrder(d);
+        }
+        size++;
     }
 
-    public BinaryTreeNode delete(int data) {
-        return head.delete(data);
+    public RandomNodeTree find(int d) {
+        if (d == data) return this;
+        else if (d < data) return left != null ? left.find(d) : null;
+        else if (d > data) return right != null ? right.find(d) : null;
+        return null;
     }
-
-    public BinaryTreeNode getRandomNode() {
-        List<BinaryTreeNode> nodes = new ArrayList();
-
-        getRandomNode(head, nodes);
-        int randomN = generateRandomNumber(0, nodes.size());
-        return nodes.get(randomN);
-    }
-
-
-    private void getRandomNode(BinaryTreeNode n, List<BinaryTreeNode> nodes) {
-        if (n == null) return;
-        nodes.add(n);
-        getRandomNode(n.left, nodes);
-        getRandomNode(n.right, nodes);
-    }
-
-    private int generateRandomNumber(int min, int max) {
-        Random r = new Random();
-        return r.nextInt((max - min) - 1) + min;
-    }
-
-
 }

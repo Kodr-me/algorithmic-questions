@@ -6,11 +6,14 @@ public class RandomNodeTreeTest {
 
     @Test
     void test1() {
-        BinaryTreeNode head = BSTUtils.generateTree();
-        RandomNodeTree randomNodeTree = new RandomNodeTree(head);
+        RandomNodeTree randomNodeTree = new RandomNodeTree(5);
+        randomNodeTree.insertInOrder(3);
+        randomNodeTree.insertInOrder(2);
+        randomNodeTree.insertInOrder(1);
+        randomNodeTree.insertInOrder(4);
+        randomNodeTree.insertInOrder(8);
+        randomNodeTree.insertInOrder(10);
 
-        randomNodeTree.head.printInOrderTraversal();
-
-        System.out.println(randomNodeTree.getRandomNode().data);
+        System.out.println(randomNodeTree.getRandomNode());
     }
 }
