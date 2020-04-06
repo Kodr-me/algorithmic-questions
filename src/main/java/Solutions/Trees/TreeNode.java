@@ -54,6 +54,19 @@ public class TreeNode {
         printInOrderTraversal(n);
     }
 
+    void printpreOrdertraversal() {
+        TreeNode n = this;
+        printpreOrdertraversal(n);
+    }
+
+    private void printpreOrdertraversal(TreeNode node) {
+        if (node != null) {
+            visit(node);
+            inOrderTraversal(node.left);
+            inOrderTraversal(node.right);
+        }
+    }
+
     void printInOrderTraversal(TreeNode n) {
         if (n != null) {
             printInOrderTraversal(n.left);
