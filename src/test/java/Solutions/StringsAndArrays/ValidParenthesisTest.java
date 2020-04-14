@@ -10,37 +10,49 @@ public class ValidParenthesisTest {
     @Test
     void validTest0() {
         String input = "[]";
-        assertTrue(validParenthesis.solution(input));
+        assertTrue(validParenthesis.isValid(input));
     }
 
 
     @Test
     void validTest1() {
         String input = "()";
-        assertTrue(validParenthesis.solution(input));
+        assertTrue(validParenthesis.isValid(input));
     }
 
     @Test
     void validTest2() {
         String input = "()[]{}";
-        assertTrue(validParenthesis.solution(input));
+        assertTrue(validParenthesis.isValid(input));
     }
 
     @Test
     void validTest3() {
         String input = "{[]}";
-        assertTrue(validParenthesis.solution(input));
+        assertTrue(validParenthesis.isValid(input));
     }
 
     @Test
     void invalidTest1() {
         String input = "(]";
-        assertFalse(validParenthesis.solution(input));
+        assertFalse(validParenthesis.isValid(input));
     }
 
     @Test
     void invalidTest2() {
         String input = "([)]";
-        assertFalse(validParenthesis.solution(input));
+        assertFalse(validParenthesis.isValid(input));
+    }
+
+    @Test
+    void invalidTest3() {
+        String input = "((";
+        assertFalse(validParenthesis.isValid(input));
+    }
+
+    @Test
+    void invalidTest4() {
+        String input = "){";
+        assertFalse(validParenthesis.isValid(input));
     }
 }

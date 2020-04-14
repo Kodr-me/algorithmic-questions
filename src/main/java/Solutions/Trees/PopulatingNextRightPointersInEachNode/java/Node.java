@@ -30,7 +30,7 @@ public class Node {
         if (n != null) {
             printInOrderTraversal(n.left);
             System.out.println("value: " + n.val);
-            if (n.next != null) System.out.println("next: " + n.next.val);
+//            if (n.next != null) System.out.println("next: " + n.next.val);
             System.out.println("--------");
             printInOrderTraversal(n.right);
         }

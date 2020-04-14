@@ -46,7 +46,7 @@ public class PopulatingNextRightPointersInEachNode {
     then we move down to the level below and we tie those nodes.
 
     In this case the time complexity is O(N) as we only iterate through each node once.
-    Space complexity is O(1) since we dont make use of any extra data strucutre for traversing the ndoes in a particular order.
+    Space complexity is constant O(1) since we dont make use of any extra data strucutre for traversing the ndoes in a particular order.
      */
     public Node connect2(Node root) {
         if (root == null) return null;
