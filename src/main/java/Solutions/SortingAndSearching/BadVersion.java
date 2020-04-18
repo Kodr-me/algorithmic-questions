@@ -1,41 +1,40 @@
 package Solutions.SortingAndSearching;
 
 class BadVersion {
-    private static int badV;
 
-    public BadVersion(int badV) {
-        this.badV = badV;
+    int badVersion;
+
+    public BadVersion(int badVersion) {
+        this.badVersion = badVersion;
     }
 
-    public static boolean isBadVersion(int n) {
-        return n >= badV;
+    private boolean isBadVersion(int n) {
+        return n >= this.badVersion;
     }
 
-    /*
-    This solution linear solution is not really effective, O(N).
-    As we know it gets broken after a certain version, we know if have to go higher or lower.
-     */
-    public int badSolution(int maxVersion) {
-        for (int i = 1; i < maxVersion; i++) {
-            if (isBadVersion(i)) return i;
+    public int firstBadVersion(int n) {
+        if (isBadVersion(n) && !isBadVersion(n - 1)) return n;
+
+        int low = 1;
+        int max = n;
+
+        while (low < max) {
+            int mid = low + (max - low) / 2;
+
+            System.out.println("mid " + mid);
+
+            if (isBadVersion(mid) && !isBadVersion(mid - 1)) return mid;
+
+            if (!isBadVersion(mid)) { // go higher
+                System.out.println("going higher");
+                low = mid + 1;
+            } else {
+                System.out.println("going lower");
+                max = mid;
+            }
+
         }
+
         return -1;
     }
-
-    public int firstBadVersion(int max) {
-        int left = 1;
-        int right = max;
-
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (isBadVersion(mid)) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        System.out.println(left);
-        return left;
-    }
-
 }
