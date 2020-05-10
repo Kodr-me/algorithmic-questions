@@ -4,39 +4,35 @@ import java.util.ArrayList;
 
 public class ReversedLinkedList {
 
-    public ListNode reverseList(ListNode head) {
+    public static ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
 
-        if (head == null) return null;
-        if (head.next == null) return head;
+        ListNode prev = head;
+        ListNode current = head.next;
+        while (current != null) {
+            prev.next = current.next;
+            current.next = head;
 
-        ListNode prev = null;
-        ListNode traverser = head;
-
-        // do it in a single pass
-        while (traverser != null) {
-
-            ListNode next = traverser.next; // need to cache the next
-            traverser.next = prev; // makes the traversing node next the prev
-            prev = traverser; // need to keep track of previous
-
-            traverser = next;
+            head = current;
+            current = prev.next;
         }
 
-//        printNodes(prev);
-
-        return prev;
+        return head;
     }
 
-    public ListNode reverseListRecursively(ListNode head) {
-        if (head == null) return null;
-        return reverseListRecursively(head, null);
-    }
+    public static void main(String[] args) {
+        ListNode head = new ListNode(2);
+        head.next = new ListNode(4);
+        head.next.next = new ListNode(6);
+        head.next.next.next = new ListNode(8);
+        head.next.next.next.next = new ListNode(10);
 
-    public ListNode reverseListRecursively(ListNode current, ListNode prev) {
-        ListNode next = current.next;
-        current.next = prev;
-        if (next == null) return current;
-        return reverseListRecursively(next, current);
+        ListNode result = reverseList(head);
+        System.out.print("Nodes of the reversed LinkedList are: ");
+        while (result != null) {
+            System.out.print(result.val + " ");
+            result = result.next;
+        }
     }
 
     static void printNodes(ListNode n) {

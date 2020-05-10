@@ -2,24 +2,6 @@ package Solutions.MergeIntervals;
 
 import java.util.*;
 
-class Interval {
-    int start;
-    int end;
-
-    public Interval(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
-
-    @Override
-    public String toString() {
-        return "Interval{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
-    }
-};
-
 class MergeIntervals {
 
     public static int[][] merge(int[][] intervals) {
